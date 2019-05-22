@@ -76,7 +76,7 @@ class InstallData implements InstallDataInterface
     public function install(ModuleDataSetupInterface $setup, ModuleContextInterface $context)
     {
         $setup->startSetup();
-
+        /* disabled 
         $this->_configInterface->saveConfig('general/country/default', 'DE', ScopeConfigInterface::SCOPE_TYPE_DEFAULT, 0);
         $this->_configInterface->saveConfig('general_locale_code', 'de_DE', ScopeConfigInterface::SCOPE_TYPE_DEFAULT, 0);
         $this->_configInterface->saveConfig('general/region/state_required', 'CA,EE,FI,FR,LV,LT,RO,ES,US', ScopeConfigInterface::SCOPE_TYPE_DEFAULT, 0);
@@ -106,10 +106,12 @@ class InstallData implements InstallDataInterface
         $this->_configInterface->saveConfig('shipping/origin/country_id', 'DE', ScopeConfigInterface::SCOPE_TYPE_DEFAULT, 0);
         $this->_configInterface->saveConfig('shipping/origin/postcode', '', ScopeConfigInterface::SCOPE_TYPE_DEFAULT, 0);
         $this->_configInterface->saveConfig('germanlaw/price/shipping_page', 'versandkosten', ScopeConfigInterface::SCOPE_TYPE_DEFAULT, 0);
-
-        $this->_executor->exec($this->_cmsInstaller);
+        
         $this->_executor->exec($this->_taxInstaller);
-
+        */
+        
+        $this->_executor->exec($this->_cmsInstaller);
+        
         $setup->endSetup();
     }
 }
