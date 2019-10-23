@@ -53,6 +53,11 @@ class AfterPrice extends \Magento\Framework\View\Element\Template
      */
     protected $_urlBuilder;
 
+		/**
+		 * @var \Magento\Catalog\Model\Product
+		 */
+		protected $_product;
+
     /**
      * @param \Magento\Framework\View\Element\Template\Context $context
      * @param \Magento\Framework\Registry $registry
@@ -65,6 +70,7 @@ class AfterPrice extends \Magento\Framework\View\Element\Template
         \Magento\Framework\Registry $registry,
         \Magento\Tax\Api\TaxCalculationInterface $taxCalculation,
         \Magento\Customer\Model\Session $session,
+				\Magento\Catalog\Model\Product $product,
         array $data = []
     ){
         parent::__construct($context, $data);
@@ -75,6 +81,7 @@ class AfterPrice extends \Magento\Framework\View\Element\Template
         $this->_session = $session;
         $this->_storeManager = $context->getStoreManager();
         $this->_urlBuilder = $context->getUrlBuilder();
+				$this->_product = $product;
     }
 
     /**
@@ -109,7 +116,11 @@ class AfterPrice extends \Magento\Framework\View\Element\Template
     public function getTaxText()
     {
         /** @var $product \Magento\Catalog\Model\Product */
-        $product = $this->_registry->registry('product');
+        $product = $this->getProduct();
+				$category = $this->_registry->registry('current_category');
+				if(!$product && $category) {
+						$product = $this->getProduct();
+				}
         $taxText = __($this->_scopeConfig->getValue(
             'germanlaw/price/tax_text',
             \Magento\Store\Model\ScopeInterface::SCOPE_STORE,
@@ -159,4 +170,14 @@ class AfterPrice extends \Magento\Framework\View\Element\Template
             $this->_storeManager->getStore()->getId()
         )]);
     }
+
+		/**
+		 * Retrieve current product
+		 *
+		 * @return \Magento\Catalog\Model\Product
+		 */
+		public function getProduct()
+		{
+				return $this->_product;
+		}
 }

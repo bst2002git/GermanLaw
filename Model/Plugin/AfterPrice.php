@@ -50,10 +50,11 @@ class AfterPrice
     /**
      * Hold after price html string
      *
-     * @var null|string
+     * @var null|string|array
      */
-    protected $_afterPriceHtml = null;
+    protected $_afterPriceHtml = [];
 
+		protected $_counter=0;
     /**
      * Constructor
      *
@@ -82,12 +83,12 @@ class AfterPrice
             // Get Price Code and Product
             list($priceCode, $productInterceptor) = $params;
             $emptyTierPrices = empty($productInterceptor->getTierPrice());
-
             // If it is final price block and no tier prices exist set additional render
             // If it is tier price block and tier prices exist set additional render
-            if ((static::FINAL_PRICE === $priceCode && $emptyTierPrices) || (static::TIER_PRICE === $priceCode && !$emptyTierPrices)) {
-                $renderHtml .= $this->_getAfterPriceHtml();
-            }
+            //if ((static::FINAL_PRICE === $priceCode && $emptyTierPrices) || (static::TIER_PRICE === $priceCode && !$emptyTierPrices)) {
+                $renderHtml .= $this->_getAfterPriceHtml($productInterceptor, $priceCode);
+                //$renderHtml .= $this->_getAfterPriceHtml($productInterceptor, $priceCode).' '.$priceCode.' '.((empty($productInterceptor->getTierPrice()))? 'TierEmpty':'TierPrice');
+            //}
         } catch (\Exception $ex) {
             // if an error occurs, just render the default since it is preallocated
             return $renderHtml;
@@ -101,14 +102,17 @@ class AfterPrice
      *
      * @return null|string
      */
-    protected function _getAfterPriceHtml()
+    protected function _getAfterPriceHtml(SaleableInterface $product, $priceCode)
     {
-        if (null === $this->_afterPriceHtml) {
-            $afterPriceBlock = $this->_layout->createBlock('Magenerds\GermanLaw\Block\AfterPrice', 'after_price');
-            $afterPriceBlock->setTemplate('Magenerds_GermanLaw::price/after.phtml');
-            $this->_afterPriceHtml = $afterPriceBlock->toHtml();
-        }
+        if (!$product) return '';
+				$this->_counter++;
+				if (!array_key_exists($product->getId().'-'.$this->_counter, $this->_afterPriceHtml)) {
+						$afterPriceBlock = $this->_layout->createBlock('Magenerds\GermanLaw\Block\AfterPrice', 'after_price_'.$product->getId(),['product' => $product]);
+						$afterPriceBlock->setTemplate('Magenerds_GermanLaw::price/after.phtml');
+						$this->_afterPriceHtml[$product->getId().'-'.$this->_counter] = $afterPriceBlock->toHtml();
+				}
 
-        return $this->_afterPriceHtml;
+
+				return $this->_afterPriceHtml[$product->getId().'-'.$this->_counter];
     }
 }
