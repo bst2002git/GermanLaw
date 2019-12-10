@@ -17,8 +17,11 @@
  * @link       https://www.techdivision.com/
  */
  -->
-<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
-    <type name="Magento\Framework\Pricing\Render">
-        <plugin name="magenerds_germanlaw_priceRender" type="Magenerds\GermanLaw\Model\Plugin\AfterPrice" sortOrder="100"/>
-    </type>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Module/etc/module.xsd">
+    <module name="Magenerds_GermanLaw" setup_version="1.0.4">
+        <sequence>
+            <module name="Magento_Directory" />
+            <module name="Magento_Tax" />
+        </sequence>
+    </module>
 </config>
