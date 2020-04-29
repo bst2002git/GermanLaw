@@ -12,10 +12,9 @@ namespace Magenerds\GermanLaw\Block\Product;
 
 class ProductsList extends \Magento\CatalogWidget\Block\Product\ProductsList
 {
+    protected $_template = 'Magento_CatalogWidget::product/widget/content/grid.phtml';
 
-		protected $_template = 'Magento_CatalogWidget::product/widget/content/grid.phtml';
-
-		protected $_httpContext;
+    protected $_httpContext;
 
 		/**
      * Hold after price html string
@@ -32,6 +31,7 @@ class ProductsList extends \Magento\CatalogWidget\Block\Product\ProductsList
         \Magento\Rule\Model\Condition\Sql\Builder $sqlBuilder,
         \Magento\CatalogWidget\Model\Rule $rule,
         \Magento\Widget\Helper\Conditions $conditionsHelper,
+	\Magento\Catalog\Api\CategoryRepositoryInterface $categoryRepository,
         array $data = []
     ) {
         $this->_httpContext = $httpContext;
@@ -43,6 +43,7 @@ class ProductsList extends \Magento\CatalogWidget\Block\Product\ProductsList
             $sqlBuilder,
             $rule,
             $conditionsHelper,
+	    $categoryRepository,
             $data
         );
     }
