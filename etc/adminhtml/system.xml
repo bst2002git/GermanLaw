@@ -50,6 +50,11 @@
                     <source_model>Magento\Cms\Model\Config\Source\Page</source_model>
                     <comment>Select the CMS page which you want to use to link to.</comment>
                 </field>
+								<field id="display_minicart_extra" translate="label comment" type="select" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Display on Mini Cart</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Show Tax text in MiniCart</comment>
+                </field>
             </group>
         </section>
     </system>

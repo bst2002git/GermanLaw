@@ -25,6 +25,7 @@
             </general>
             <price>
                 <tax_text>Inkl. %s MwSt., zzgl. [Versand]</tax_text>
+                <display_minicart_extra>1</display_minicart_extra>
             </price>
         </germanlaw>
     </default>
