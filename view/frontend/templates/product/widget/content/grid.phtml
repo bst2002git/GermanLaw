@@ -113,7 +113,7 @@ use Magento\Framework\App\Action\Action;
             <?= $block->getPagerHtml() ?>
         </div>
     </div>
-		<?php if (!$block->isRedirectToCartEnabled()) : ?>
+    <?php if (!$block->isRedirectToCartEnabled()) : ?>
         <script type="text/x-magento-init">
         {
             "[data-role=tocart-form], .form.map.checkout": {
